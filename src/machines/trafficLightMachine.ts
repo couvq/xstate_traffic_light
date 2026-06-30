@@ -1,6 +1,13 @@
-import { createActor, createMachine } from "xstate";
+import { createActor, setup } from "xstate";
 
-const trafficLightMachine = createMachine({
+const trafficLightMachine = setup({
+  types: {
+    events: {} as
+      | { type: "turnGreen" }
+      | { type: "turnYellow" }
+      | { type: "turnRed" },
+  },
+}).createMachine({
   /** @xstate-layout N4IgpgJg5mDOIC5QBcBOBDAZpglgYwBkcoALZAOlUgGJkBXVAOwHEqxGBtABgF1FQADgHtYOZDiGN+IAB6IAjAGYu5AKwAaEAE9EAJi7zyu1QF8TmtFlyFiZclDaNaDRgE0wAGw9CA7tz5IIMKi4pLScgiKAGyKRlyK8saaOgj6hsZmFhjY+ESkFFqe3j7OTABKkP7SwWISUoERigAchlwA7PGJGtqITSqmmSCMQhBw0pY5NvnVIrVhDYgAtFHJS1GDE9Z5dlQQMyF14YgALLqrCE1Rak2Kt3f3txvZW7YUDmDs+3P1oBG6UW0jC0kj1UgZyG0BlkrLlXuRCl5fF9Qj9ZIhVOCAJxtKKqKIglJNTHkLg3B7ksxmIA */
   id: "trafficLight",
 
