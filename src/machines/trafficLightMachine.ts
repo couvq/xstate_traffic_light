@@ -1,33 +1,26 @@
-import { createActor, setup } from "xstate";
+import { createActor, createMachine } from "xstate";
 
-const trafficLightMachine = setup({
-  types: {
-    events: {} as
-      | { type: "turnGreen" }
-      | { type: "turnYellow" }
-      | { type: "turnRed" },
-  },
-}).createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QBcBOBDAZpglgYwBkcoALZAOlUgGJkBXVAOwHEqxGBtABgF1FQADgHtYOZDiGN+IAB6IAjAGYu5AKwAaEAE9EAJi7zyu1QF8TmtFlyFiZclDaNaDRgE0wAGw9CA7tz5IIMKi4pLScgiKAGyKRlyK8saaOgj6hsZmFhjY+ESkFFqe3j7OTABKkP7SwWISUoERigAchlwA7PGJGtqITSqmmSCMQhBw0pY5NvnVIrVhDYgAtFHJS1GDE9Z5dlQQMyF14YgALLqrCE1Rak2Kt3f3txvZW7YUDmDs+3P1oBG6UW0jC0kj1UgZyG0BlkrLlXuRCl5fF9Qj9ZIhVOCAJxtKKqKIglJNTHkLg3B7ksxmIA */
+const trafficLightMachine = createMachine({
+  /** @xstate-layout N4IgpgJg5mDOIC5QBcBOBDAZpglgYwBkcoALZAOlUgGIAPWZdZMcrZ1ACgGYAGPgSmposuQsTKVIAbR4BdRKAAOAe1g5kOZQDsFIWogCMvcgBYAnBbMB2AKxcTPGzwAcXADQgAnogBMPA+S2fAY+ZiY+djYmzgC+MR7C2PhEpBRQVGBadAxMLGxgnH4CQhhJYqnk6WCZMvJIICpqGtq6+ghcTuQG-jZWVv48DtEe3gh+AUF8oU5Rg7HxIImiKRKeYAA268oA7tmMzKyY7BzdxUvJ4hRrmzu1uo3qmjr1bR0BZqH9PuFcVgBsfRGiGcAScfEGZgMtmcVhMNjiCy0yggcF053KZHuqkeLReiAAtH8gQhCXEEqVlpdJBAsU0nq1EOFic4-uQXFx7B9rP0uM55uSRBcKlVMrScc9QG0IiYulZrP4DDYbAYzDYWcSioEwQYTH87HwbGYyYsKULVhsttsxc0JXpGVYuORfk4DH9un9nDxucznOQ1RzzJ8eXyETEgA */
   id: "trafficLight",
 
   initial: "red",
 
   states: {
     red: {
-      on: {
-        turnGreen: "green",
+      after: {
+        5000: "green",
       },
     },
 
     green: {
-      on: {
-        turnYellow: "yellow",
+      after: {
+        3000: "yellow",
       },
     },
     yellow: {
-      on: {
-        turnRed: "red",
+      after: {
+        2000: "red",
       },
     },
   },
