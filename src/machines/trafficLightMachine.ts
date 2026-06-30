@@ -1,7 +1,8 @@
-import { createActor, createMachine } from "xstate";
+import { useSelector } from "@xstate/react";
+import { createActor, createMachine, type SnapshotFrom } from "xstate";
 
 const trafficLightMachine = createMachine({
-  /** @xstate-layout N4IgpgJg5mDOIC5QBcBOBDAZpglgYwBkcoALZAOlUgGIAPWZdZMcrZ1ACgGYAGPgSmposuQsTKVIAbR4BdRKAAOAe1g5kOZQDsFIWogCMvcgBYAnBbMB2AKxcTPGzwAcXADQgAnogBMPA+S2fAY+ZiY+djYmzgC+MR7C2PhEpBRQVGBadAxMLGxgnH4CQhhJYqnk6WCZMvJIICpqGtq6+ghcTuQG-jZWVv48DtEe3gh+AUF8oU5Rg7HxIImiKRKeYAA268oA7tmMzKyY7BzdxUvJ4hRrmzu1uo3qmjr1bR0BZqH9PuFcVgBsfRGiGcAScfEGZgMtmcVhMNjiCy0yggcF053KZHuqkeLReiAAtH8gQhCXEEqVlpdJBAsU0nq1EOFic4-uQXFx7B9rP0uM55uSRBcKlVMrScc9QG0IiYulZrP4DDYbAYzDYWcSioEwQYTH87HwbGYyYsKULVhsttsxc0JXpGVYuORfk4DH9un9nDxucznOQ1RzzJ8eXyETEgA */
+  /** @xstate-layout N4IgpgJg5mDOIC5QBcBOBDAZpglgYwBkcoALZAOlUgGIAPWZdZMcrZ1ACgFYAGPgSmposuQsTKVIAbR4BdRKAAOAe1g5kOZQDsFIWogCMAZh7kALAE4rFgBwAmC1xtHLRgDQgAnojs8D5AHZLax4jEy5HMwBfKI9hbHwiUgooKjAtOgYmFjYwThMBIQwEsWTyVLB0mXkkEBU1DW1dfQQXC0CXIxtQuwMbLgA2AfcvHz9A4KtQ8MiYuOLRJIlPMAAbVeUAd0zGZlZMdg5fQvjF8QoV9a3q3Xr1TR1alqNecgMzHmGzewCuAzsuB5vAgbP5eHweHY7M4Ap8zNE5iAtMoIHBdKdEudbqp7k0nogALQDIGEgbkCEUyl8AKIjGlCRUCDYhoPZqIMx2Ekgsk8ZwuYYvCwBAZQ2kLTFlCrpZm4x6gFoAozkUF2b6RP4DCxmLnHQLggy8l5ceFasUiCXLNYbTYyxpyvTsgJKszvHgBJ0i2xOgJcmw2chOMJmAURYWimJRIA */
   id: "trafficLight",
 
   initial: "red",
@@ -38,3 +39,10 @@ trafficLightActor.subscribe((snapshot) => {
 // Start running the actor.
 // It will go to the initial state and transition to other states from there
 trafficLightActor.start();
+
+type TrafficMachineSnapshot = SnapshotFrom<typeof trafficLightMachine>
+
+// hook to read state snapshot, strongly typed
+export const useTrafficLightSnapshot = (): TrafficMachineSnapshot => {
+  return useSelector(trafficLightActor, (snapshot) => snapshot)
+}
